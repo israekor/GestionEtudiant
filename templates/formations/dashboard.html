@@ -1,0 +1,61 @@
+{% extends 'base.html' %} 
+{% block title %}Tableau de Bord{% endblock %} 
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2><i class="fas fa-tachometer-alt me-2"></i>Tableau de Bord</h2>
+  <a href="{% url 'ajouter_formation' %}" class="btn btn-success"
+    >+ Nouvelle Formation</a
+  >
+</div>
+<div class="card">
+  <div class="card-header bg-dark text-white">
+    Catalogue des Formations ({{ formations.count }})
+  </div>
+  <div class="card-body p-0">
+    {% if formations %}
+    <table class="table table-hover mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Titre</th>
+          <th>Durée</th>
+          <th>Prix</th>
+          <th>Inscrits</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in formations %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td class="fw-semibold">{{ f.titre }}</td>
+          <td>{{ f.duree }}h</td>
+          <td>{{ f.prix }} MAD</td>
+          <td>{{ f.etudiants.count }}</td>
+          <td>
+            <a
+              href="{% url 'modifier_formation' f.pk %}"
+              class="btn btn-warning btn-sm"
+              >Modifier</a
+            >
+            <a
+              href="{% url 'supprimer_formation' f.pk %}"
+              class="btn btn-danger btn-sm"
+              >Supprimer</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="text-center py-5 text-muted">
+      <p>
+        Aucune formation.
+        <a href="{% url 'ajouter_formation' %}">Créer la première</a>
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

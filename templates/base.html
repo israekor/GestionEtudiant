@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}EduManager{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="/"
+          ><i class="fas fa-graduation-cap me-2"></i>EduManager</a
+        >
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto align-items-center">
+            {% if user.is_authenticated %} 
+            {% if user.is_staff or user.is_superuser %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'dashboard' %}"
+                >Tableau de bord</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ajouter_formation' %}"
+                >+ Formation</a
+              >
+            </li>
+            <li class="nav-item ms-2">
+              <span class="badge bg-danger px-3 py-2">Admin</span>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'liste_formations' %}"
+                >Formations</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'mon_profil' %}">Mon Profil</a>
+            </li>
+            <li class="nav-item ms-2">
+              <span class="badge bg-success px-3 py-2">Étudiant</span>
+            </li>
+            {% endif %}
+            <li class="nav-item ms-3">
+              <span class="text-white me-3">{{ user.username }}</span>
+              <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm"
+                >Déconnexion</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-4 mb-5">
+      {% for message in messages %}
+      <div
+        class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %} 
+      {% block content %}
+      {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

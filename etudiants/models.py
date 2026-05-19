@@ -19,3 +19,6 @@ class Etudiant(models.Model):
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"
+
+    class Meta:
+        verbose_name = "Étudiant"

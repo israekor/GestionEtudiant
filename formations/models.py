@@ -8,3 +8,7 @@ class Formation(models.Model):
 
     def __str__(self):
         return self.titre
+
+    class Meta:
+        verbose_name = "Formation"
+        ordering = ['titre']

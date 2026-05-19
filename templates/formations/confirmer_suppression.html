@@ -1,0 +1,29 @@
+{% extends 'base.html' %} 
+{% block title %}Supprimer Formation{% endblock %} 
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-md-5 text-center">
+    <div class="card border-danger">
+      <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">Confirmer la suppression</h5>
+      </div>
+      <div class="card-body py-4">
+        <p class="fs-5">Supprimer la formation :</p>
+        <h4 class="text-danger">"{{ formation.titre }}"</h4>
+        <p class="text-muted">
+          {{ formation.etudiants.count }} étudiant(s) seront désinscrits.
+        </p>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger px-4">Confirmer</button>
+          </form>
+          <a href="{% url 'dashboard' %}" class="btn btn-secondary px-4"
+            >Annuler</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
